@@ -10,7 +10,7 @@ opkg install \
   luci-app-ddns ddns-scripts ddns-scripts-services ddns-scripts-cloudflare \
   luci-app-wol etherwake wakeonlan \
   luci-app-commands luci-app-ttyd \
-  openssh-sftp-server nano curl
+  openssh-sftp-server vim curl
 ```
 
 ## 每个包的作用
@@ -24,7 +24,7 @@ opkg install \
 | `luci-app-commands` | 网页里执行自定义命令（调试方便） |
 | `luci-app-ttyd` | 网页终端（不想开 SSH 时用） |
 | `openssh-sftp-server` | 让电脑上的 `scp` 不用加 `-O` 也能传文件 |
-| `nano` | 命令行编辑配置文件 |
+| `vim` | 命令行编辑配置文件（习惯精简版也可以换成 `vim-full`） |
 | `curl` | 命令行调试 HTTP/HTTPS |
 
 如果 DDNS 用的是阿里云、DuckDNS 等，把 `ddns-scripts-cloudflare` 换成对应包，
@@ -37,7 +37,7 @@ opkg list | grep ddns-scripts
 ## 验证
 
 ```sh
-opkg list-installed | grep -E 'ddns|wol|etherwake|wakeonlan|ttyd|commands|sftp|nano|curl'
+opkg list-installed | grep -E 'ddns|wol|etherwake|wakeonlan|ttyd|commands|sftp|vim|curl'
 ```
 
 网页上应该能看到：
