@@ -25,13 +25,20 @@ iKuai 路由器需要做的配置，以及每一步的验证方法。
 
 ## 建议顺序
 
+先把不依赖 LAN 网段的东西做完，最后再改 LAN IP，这样可以一直保持在线操作、
+随时备份：
+
 1. 先做一次配置备份（见 [07](docs/07-backup-restore.md)）
-2. 改 LAN 为 `10.10.10.1`（会断线，必须先做）→ [01](docs/01-lan-ip.md)
-3. 配 PPPoE 拨号 → [02](docs/02-pppoe.md)
-4. 开 IPv6 → [06](docs/06-ipv6.md)
-5. 配静态地址绑定 → [03](docs/03-dhcp-static.md)
-6. 配 DDNS → [04](docs/04-ddns.md)
+2. 配 PPPoE 拨号 → [02](docs/02-pppoe.md)
+3. 开 IPv6 → [06](docs/06-ipv6.md)
+4. 配 DDNS → [04](docs/04-ddns.md)
+5. 改 LAN 为 `10.10.10.1`（会短暂断管理页，WAN 不受影响）→ [01](docs/01-lan-ip.md)
+6. **改完之后**再配静态地址绑定 → [03](docs/03-dhcp-static.md)
 7. 配网络唤醒 → [05](docs/05-wake-on-lan.md)
+
+> 只有“按 MAC 固定 IP”必须放在改 LAN 之后：绑定地址属于 LAN 网段，先绑
+> `192.168.1.x` 改完就失效了。PPPoE / IPv6 / DDNS / WoL 都和 LAN 网段无关，
+> 放在前面做更安全。
 
 ## 文档索引
 
