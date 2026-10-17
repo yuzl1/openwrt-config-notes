@@ -11,7 +11,7 @@
 | --- | --- | --- | --- |
 | 0 准备 | 记录 iKuai 的配置、把 RA81 临时接入现有网络 | 在线 | [00](docs/00-preflight.md) |
 | 1 预装软件 | 用 opkg 把所有要用的包一次性装齐 | **在线** | [01](docs/01-packages.md) |
-| 2 离线配置 | 改 LAN、填 PPPoE、IPv6、DDNS、静态绑定、WoL | 离线 | [02](docs/02-lan-ip.md)–[08](docs/08-backup-restore.md) |
+| 2 离线配置 | 改 LAN、填 PPPoE、IPv6、DDNS-Go、静态绑定、WoL | 离线 | [02](docs/02-lan-ip.md)–[08](docs/08-backup-restore.md) |
 | 3 替换上线 | 光猫线改插 RA81 的 WAN，验证 | 在线 | [09](docs/09-cutover.md) |
 | 4 收尾 | 最终备份、记录 IP 规划 | 在线 | [09](docs/09-cutover.md) |
 
@@ -32,7 +32,7 @@
 1. LAN 改 `10.10.10.1`，DHCP 同网段 → [02](docs/02-lan-ip.md)
 2. PPPoE 拨号 → [03](docs/03-pppoe.md)
 3. IPv6 → [04](docs/04-ipv6.md)
-4. DDNS → [05](docs/05-ddns.md)
+4. DDNS-Go（腾讯云 / DNSPod）→ [05](docs/05-ddns.md)
 5. 按 MAC 固定 IP → [06](docs/06-dhcp-static.md)
 6. 网络唤醒（可定时）→ [07](docs/07-wake-on-lan.md)
 

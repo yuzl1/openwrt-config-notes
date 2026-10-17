@@ -1,4 +1,4 @@
-# 08 预装软件（必须在线完成）
+# 01 预装软件（必须在线完成）
 
 离线配置阶段没有外网，`opkg` 装不了东西，所以这一步要**在还能上网时做完**。
 
@@ -7,7 +7,7 @@
 ```sh
 opkg update
 opkg install \
-  luci-app-ddns ddns-scripts ddns-scripts-services ddns-scripts-dnspod \
+  ddns-go luci-app-ddns-go luci-i18n-ddns-go-zh-cn \
   luci-app-wol etherwake wakeonlan \
   luci-app-commands luci-app-ttyd \
   openssh-sftp-server vim curl
@@ -17,8 +17,9 @@ opkg install \
 
 | 包 | 作用 |
 | --- | --- |
-| `luci-app-ddns` + `ddns-scripts` + `ddns-scripts-services` | DDNS 网页界面与脚本框架 |
-| `ddns-scripts-dnspod` | 腾讯云 DNSPod（dnspod.cn）的 DDNS 脚本 |
+| `ddns-go` | DDNS 客户端主程序（自带 9876 网页配置界面） |
+| `luci-app-ddns-go` | LuCI 里的 DDNS-Go 入口页（开关 + 跳转） |
+| `luci-i18n-ddns-go-zh-cn` | DDNS-Go 界面的中文翻译 |
 | `luci-app-wol` | 网页上的网络唤醒页面 |
 | `etherwake` / `wakeonlan` | 命令行发魔术包（定时任务用） |
 | `luci-app-commands` | 网页里执行自定义命令（调试方便） |
@@ -27,12 +28,8 @@ opkg install \
 | `vim` | 命令行编辑配置文件（习惯精简版也可以换成 `vim-full`） |
 | `curl` | 命令行调试 HTTP/HTTPS |
 
-如果 DDNS 服务商不是 DNSPod，把 `ddns-scripts-dnspod` 换成对应包，
-可以先查：
-
-```sh
-opkg list | grep ddns-scripts
-```
+DDNS-Go 自带绝大多数服务商（腾讯云、DNSPod、Cloudflare、阿里云等），
+不需要再装服务商脚本包。
 
 ## 验证
 
@@ -42,7 +39,7 @@ opkg list-installed | grep -E 'ddns|wol|etherwake|wakeonlan|ttyd|commands|sftp|v
 
 网页上应该能看到：
 
-- **服务 → 动态 DNS**
+- **服务 → DDNS-Go**
 - **网络 → Wake-on-LAN**
 - **系统 → TTYD 终端**（或“终端”）
 
