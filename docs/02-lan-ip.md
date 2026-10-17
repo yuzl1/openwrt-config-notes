@@ -2,7 +2,7 @@
 
 这一步在**离线配置阶段**做（软件已装好、WAN 已断开）。PPPoE / IPv6 / DDNS
 都和 LAN 网段无关，可以先配，但改 LAN 一定要在“按 MAC 固定 IP”
-（[03](03-dhcp-static.md)）之前，因为绑定地址属于 LAN 网段。
+（[06](06-dhcp-static.md)）之前，因为绑定地址属于 LAN 网段。
 
 改完路由器会换 IP，当前页面会断开。
 
@@ -60,5 +60,5 @@ uci get dhcp.lan.start && uci get dhcp.lan.limit   # 100 / 150
 ## 注意
 
 - 如果原来有静态 IP 的设备（NAS、打印机、摄像头），要么手动改成 `10.10.10.x`，
-  要么在 [03](03-dhcp-static.md) 里按 MAC 重新绑定。
+  要么在 [06](06-dhcp-static.md) 里按 MAC 重新绑定。
 - 改 LAN 之后先别急着做别的，确认能正常上网/进管理页再继续。

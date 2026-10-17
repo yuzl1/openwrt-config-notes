@@ -1,6 +1,6 @@
 # 09 替换上线与回滚
 
-前提：软件已装齐（[08](08-packages.md)），离线配置已完成（[01](01-lan-ip.md)–[07](07-backup-restore.md)），
+前提：软件已装齐（[01](01-packages.md)），离线配置已完成（[02](02-lan-ip.md)–[08](08-backup-restore.md)），
 并且做过一次备份。
 
 ## 替换步骤
