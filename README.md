@@ -1,60 +1,46 @@
-# OpenWrt / ImmortalWrt 配置笔记（红米 AX3000 / RA81）
+# ImmortalWrt 迁移笔记：用红米 AX3000（RA81）替换 iKuai
 
-记录这台红米 AX3000（RA81）刷 ImmortalWrt 23.05.3 之后，用来替换原来
-iKuai 路由器需要做的配置，以及每一步的验证方法。
+这台红米 AX3000（RA81）刷了 ImmortalWrt 23.05.3（`ipq50xx/arm`，arm 32 位），
+目标是替换现在的 iKuai 路由器。
 
-## 设备现状
+全程在 LuCI 网页里手动操作，这个仓库只记录流程和每一步的验证方法。
 
-| 项目 | 值 |
+## 迁移总流程
+
+| 阶段 | 做什么 | 需要联网吗 | 文档 |
+| --- | --- | --- | --- |
+| 0 准备 | 记录 iKuai 的配置、把 RA81 临时接入现有网络 | 在线 | [00](docs/00-preflight.md) |
+| 1 预装软件 | 用 opkg 把所有要用的包一次性装齐 | **在线** | [08](docs/08-packages.md) |
+| 2 离线配置 | 改 LAN、填 PPPoE、IPv6、静态绑定、DDNS、WoL | 离线 | [01](docs/01-lan-ip.md)–[07](docs/07-backup-restore.md) |
+| 3 替换上线 | 光猫线改插 RA81 的 WAN，验证 | 在线 | [09](docs/09-cutover.md) |
+| 4 收尾 | 最终备份、记录 IP 规划 | 在线 | [09](docs/09-cutover.md) |
+
+> **关键顺序**：软件一定要先装好。离线配置阶段没有外网，`opkg` 什么都装不了。
+
+## IP 规划
+
+| 用途 | 地址 |
 | --- | --- |
-| 设备 | Redmi AX3000（RA81），IPQ5000，arm 32 位 |
-| 固件 | ImmortalWrt 23.05.3（`ipq50xx/arm`，`arm_cortex-a7_neon-vfpv4`） |
-| 管理地址 | `http://10.10.10.1`（改之前是 192.168.1.1） |
-| LAN 网段 | `10.10.10.0/24`，网关 `10.10.10.1` |
+| LAN / 网关 | `10.10.10.1/24` |
 | DHCP 池 | `10.10.10.100` – `10.10.10.249` |
-| WAN | PPPoE 拨号 |
+| 固定地址（NAS/打印机/摄像头等） | `10.10.10.2` – `10.10.10.99` |
+| 电脑临时调试地址 | `10.10.10.2/24`，网关 `10.10.10.1` |
+| 管理页面 | `http://10.10.10.1` |
 
-## 目标
+## 要实现的六项
 
-1. DDNS
-2. 按 MAC 固定 IP
-3. 网络唤醒（可定时）
-4. PPPoE 拨号
-5. 开启 IPv6
-6. LAN 改为 `10.10.10.1`，DHCP 同网段
+1. LAN 改 `10.10.10.1`，DHCP 同网段 → [01](docs/01-lan-ip.md)
+2. PPPoE 拨号 → [02](docs/02-pppoe.md)
+3. 按 MAC 固定 IP → [03](docs/03-dhcp-static.md)
+4. DDNS → [04](docs/04-ddns.md)
+5. 网络唤醒（可定时）→ [05](docs/05-wake-on-lan.md)
+6. IPv6 → [06](docs/06-ipv6.md)
 
-## 建议顺序
+辅助文档：备份恢复 [07](docs/07-backup-restore.md)，替换上线 [09](docs/09-cutover.md)。
 
-先把不依赖 LAN 网段的东西做完，最后再改 LAN IP，这样可以一直保持在线操作、
-随时备份：
+## 操作原则
 
-1. 先做一次配置备份（见 [07](docs/07-backup-restore.md)）
-2. 配 PPPoE 拨号 → [02](docs/02-pppoe.md)
-3. 开 IPv6 → [06](docs/06-ipv6.md)
-4. 配 DDNS → [04](docs/04-ddns.md)
-5. 改 LAN 为 `10.10.10.1`（会短暂断管理页，WAN 不受影响）→ [01](docs/01-lan-ip.md)
-6. **改完之后**再配静态地址绑定 → [03](docs/03-dhcp-static.md)
-7. 配网络唤醒 → [05](docs/05-wake-on-lan.md)
-
-> 只有“按 MAC 固定 IP”必须放在改 LAN 之后：绑定地址属于 LAN 网段，先绑
-> `192.168.1.x` 改完就失效了。PPPoE / IPv6 / DDNS / WoL 都和 LAN 网段无关，
-> 放在前面做更安全。
-
-## 文档索引
-
-| 文档 | 内容 |
-| --- | --- |
-| [01-lan-ip.md](docs/01-lan-ip.md) | 改 LAN IP 为 10.10.10.1 + DHCP 池 |
-| [02-pppoe.md](docs/02-pppoe.md) | PPPoE 拨号、VLAN、MTU |
-| [03-dhcp-static.md](docs/03-dhcp-static.md) | 按 MAC 固定 IP |
-| [04-ddns.md](docs/04-ddns.md) | DDNS（Cloudflare 等） |
-| [05-wake-on-lan.md](docs/05-wake-on-lan.md) | 网络唤醒 + 定时任务 |
-| [06-ipv6.md](docs/06-ipv6.md) | IPv6（DHCPv6 / PD / RA） |
-| [07-backup-restore.md](docs/07-backup-restore.md) | 备份与恢复 |
-
-## 通用说明
-
-- 所有操作都可以在 LuCI 网页完成，文档里同时给了命令行等价写法（SSH 用）。
-- 每改完一处都要点 **保存并应用**，否则不会生效。
-- 每一步都给了验证命令，验证通过再进下一步，避免一次改太多不好排查。
-- 建议每完成一步就做一次备份（见 07）。
+- 每改一处都点 **保存并应用**，并通过验证再进下一步。
+- 每完成一个阶段就备份一次，备份文件下载到电脑。
+- 离线配置阶段不用管能不能上网，PPPoE/IPv6/DDNS 都是配置好、替换上线后才会生效。
+- iKuai 在所有验证通过之前不要恢复出厂、不要改配置，留作回滚。
