@@ -7,7 +7,7 @@
 ```sh
 opkg update
 opkg install \
-  luci-app-ddns ddns-scripts ddns-scripts-services ddns-scripts-cloudflare \
+  luci-app-ddns ddns-scripts ddns-scripts-services ddns-scripts-dnspod \
   luci-app-wol etherwake wakeonlan \
   luci-app-commands luci-app-ttyd \
   openssh-sftp-server vim curl
@@ -18,7 +18,7 @@ opkg install \
 | 包 | 作用 |
 | --- | --- |
 | `luci-app-ddns` + `ddns-scripts` + `ddns-scripts-services` | DDNS 网页界面与脚本框架 |
-| `ddns-scripts-cloudflare` | Cloudflare 的 DDNS 脚本（用别的服务商就换成对应包） |
+| `ddns-scripts-dnspod` | 腾讯云 DNSPod（dnspod.cn）的 DDNS 脚本 |
 | `luci-app-wol` | 网页上的网络唤醒页面 |
 | `etherwake` / `wakeonlan` | 命令行发魔术包（定时任务用） |
 | `luci-app-commands` | 网页里执行自定义命令（调试方便） |
@@ -27,7 +27,7 @@ opkg install \
 | `vim` | 命令行编辑配置文件（习惯精简版也可以换成 `vim-full`） |
 | `curl` | 命令行调试 HTTP/HTTPS |
 
-如果 DDNS 用的是阿里云、DuckDNS 等，把 `ddns-scripts-cloudflare` 换成对应包，
+如果 DDNS 服务商不是 DNSPod，把 `ddns-scripts-dnspod` 换成对应包，
 可以先查：
 
 ```sh
