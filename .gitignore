@@ -1,6 +1,3 @@
 .DS_Store
 docs/.DS_Store
 docs/backup-*.tar.gz
-
-# Local notes that may contain credentials - never commit these.
-docs/ImmortalWrt 一键导入 UCI 脚本*.txt

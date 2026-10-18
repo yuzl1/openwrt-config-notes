@@ -1,0 +1,325 @@
+053109708797
+708797
+
+
+uci add dhcp host
+uci set dhcp.@host[-1].mac='08:9b:4b:43:25:83'
+uci set dhcp.@host[-1].ip='10.10.10.10'
+uci set dhcp.@host[-1].name='iKuaiAP'
+
+uci add dhcp host
+uci set dhcp.@host[-1].mac='08:9b:4b:4a:1c:57'
+uci set dhcp.@host[-1].ip='10.10.10.11'
+
+uci add dhcp host
+uci set dhcp.@host[-1].mac='14:18:77:ab:f8:df'
+uci set dhcp.@host[-1].ip='10.10.10.3'
+
+uci add dhcp host
+uci set dhcp.@host[-1].mac='10:9f:47:10:44:60'
+uci set dhcp.@host[-1].ip='10.10.10.4'
+
+uci add dhcp host
+uci set dhcp.@host[-1].mac='5a:c3:4b:cd:fb:78'
+uci set dhcp.@host[-1].ip='10.10.10.105'
+
+uci add dhcp host
+uci set dhcp.@host[-1].mac='98:2c:bc:99:7b:18'
+uci set dhcp.@host[-1].ip='10.10.10.117'
+
+uci add dhcp host
+uci set dhcp.@host[-1].mac='08:9b:4b:4e:37:85'
+uci set dhcp.@host[-1].ip='10.10.10.12'
+
+uci add dhcp host
+uci set dhcp.@host[-1].mac='00:15:5d:7b:0e:03'
+uci set dhcp.@host[-1].ip='10.10.10.111'
+
+uci add dhcp host
+uci set dhcp.@host[-1].mac='22:34:4d:09:97:c8'
+uci set dhcp.@host[-1].ip='10.10.10.56'
+uci set dhcp.@host[-1].name='pve'
+
+uci add dhcp host
+uci set dhcp.@host[-1].mac='74:5d:22:a9:86:4a'
+uci set dhcp.@host[-1].ip='10.10.10.100'
+uci set dhcp.@host[-1].name='DESKTOP-NUUTHVT'
+
+uci add dhcp host
+uci set dhcp.@host[-1].mac='2c:6e:85:fb:bd:e6'
+uci set dhcp.@host[-1].ip='10.10.10.118'
+
+uci add dhcp host
+uci set dhcp.@host[-1].mac='ee:91:34:05:90:7a'
+uci set dhcp.@host[-1].ip='10.10.10.123'
+
+uci add dhcp host
+uci set dhcp.@host[-1].mac='42:83:de:86:af:fd'
+uci set dhcp.@host[-1].ip='10.10.10.115'
+# 修复：把空格替换成短横线，dnsmasq不允许主机名带空格
+uci set dhcp.@host[-1].name='Luckfox-Pico-RV1106'
+
+uci add dhcp host
+uci set dhcp.@host[-1].mac='00:0c:29:8f:0e:bc'
+uci set dhcp.@host[-1].ip='10.10.10.121'
+
+uci commit dhcp
+/etc/init.d/dnsmasq restart
+
+
+
+# ========== id=5 enabled=no 8081 10.10.10.100 tcp 【禁用，注释】 ==========
+# uci add firewall redirect
+# uci set firewall.@redirect[-1].name='id5_8081'
+# uci set firewall.@redirect[-1].target='DNAT'
+# uci set firewall.@redirect[-1].src='wan'
+# uci set firewall.@redirect[-1].dest='lan'
+# uci set firewall.@redirect[-1].proto='tcp'
+# uci set firewall.@redirect[-1].src_dport='8081'
+# uci set firewall.@redirect[-1].dest_ip='10.10.10.100'
+# uci set firewall.@redirect[-1].dest_port='8081'
+# uci set firewall.@redirect[-1].enabled='0'
+
+# ========== id=11 enabled=yes 公网转爱快 986→80 tcp+udp ==========
+uci add firewall redirect
+uci set firewall.@redirect[-1].name='公网转爱快986'
+uci set firewall.@redirect[-1].target='DNAT'
+uci set firewall.@redirect[-1].src='wan'
+uci set firewall.@redirect[-1].dest='lan'
+uci set firewall.@redirect[-1].proto='tcp udp'
+uci set firewall.@redirect[-1].src_dport='986'
+uci set firewall.@redirect[-1].dest_ip='10.10.10.1'
+uci set firewall.@redirect[-1].dest_port='80'
+uci set firewall.@redirect[-1].enabled='1'
+
+# ========== id=12 enabled=no 公网转爱快 987→443 tcp+udp 【禁用】 ==========
+# uci add firewall redirect
+# uci set firewall.@redirect[-1].name='公网转爱快987'
+# uci set firewall.@redirect[-1].target='DNAT'
+# uci set firewall.@redirect[-1].src='wan'
+# uci set firewall.@redirect[-1].dest='lan'
+# uci set firewall.@redirect[-1].proto='tcp udp'
+# uci set firewall.@redirect[-1].src_dport='987'
+# uci set firewall.@redirect[-1].dest_ip='10.10.10.1'
+# uci set firewall.@redirect[-1].dest_port='443'
+# uci set firewall.@redirect[-1].enabled='0'
+
+# ========== id=13 enabled=yes 办公本 3389→3389 tcp ==========
+uci add firewall redirect
+uci set firewall.@redirect[-1].name='办公本3389'
+uci set firewall.@redirect[-1].target='DNAT'
+uci set firewall.@redirect[-1].src='wan'
+uci set firewall.@redirect[-1].dest='lan'
+uci set firewall.@redirect[-1].proto='tcp'
+uci set firewall.@redirect[-1].src_dport='3389'
+uci set firewall.@redirect[-1].dest_ip='10.10.10.100'
+uci set firewall.@redirect[-1].dest_port='3389'
+uci set firewall.@redirect[-1].enabled='1'
+
+# ========== id=14 enabled=yes 办公sdp 1080→1080 tcp+udp ==========
+uci add firewall redirect
+uci set firewall.@redirect[-1].name='办公sdp1080'
+uci set firewall.@redirect[-1].target='DNAT'
+uci set firewall.@redirect[-1].src='wan'
+uci set firewall.@redirect[-1].dest='lan'
+uci set firewall.@redirect[-1].proto='tcp udp'
+uci set firewall.@redirect[-1].src_dport='1080'
+uci set firewall.@redirect[-1].dest_ip='10.10.10.100'
+uci set firewall.@redirect[-1].dest_port='1080'
+uci set firewall.@redirect[-1].enabled='1'
+
+# ========== id=15 enabled=yes 1panel 11814→11814 tcp ==========
+uci add firewall redirect
+uci set firewall.@redirect[-1].name='1panel_11814'
+uci set firewall.@redirect[-1].target='DNAT'
+uci set firewall.@redirect[-1].src='wan'
+uci set firewall.@redirect[-1].dest='lan'
+uci set firewall.@redirect[-1].proto='tcp'
+uci set firewall.@redirect[-1].src_dport='11814'
+uci set firewall.@redirect[-1].dest_ip='10.10.10.56'
+uci set firewall.@redirect[-1].dest_port='11814'
+uci set firewall.@redirect[-1].enabled='1'
+
+# ========== id=16 enabled=yes 1panel 30443,30080 拆成两条 tcp+udp ==========
+# 30443
+uci add firewall redirect
+uci set firewall.@redirect[-1].name='1panel_30443'
+uci set firewall.@redirect[-1].target='DNAT'
+uci set firewall.@redirect[-1].src='wan'
+uci set firewall.@redirect[-1].dest='lan'
+uci set firewall.@redirect[-1].proto='tcp udp'
+uci set firewall.@redirect[-1].src_dport='30443'
+uci set firewall.@redirect[-1].dest_ip='10.10.10.56'
+uci set firewall.@redirect[-1].dest_port='30443'
+uci set firewall.@redirect[-1].enabled='1'
+
+#30080
+uci add firewall redirect
+uci set firewall.@redirect[-1].name='1panel_30080'
+uci set firewall.@redirect[-1].target='DNAT'
+uci set firewall.@redirect[-1].src='wan'
+uci set firewall.@redirect[-1].dest='lan'
+uci set firewall.@redirect[-1].proto='tcp udp'
+uci set firewall.@redirect[-1].src_dport='30080'
+uci set firewall.@redirect[-1].dest_ip='10.10.10.56'
+uci set firewall.@redirect[-1].dest_port='30080'
+uci set firewall.@redirect[-1].enabled='1'
+
+# ========== id=17 enabled=yes 22022→22 tcp+udp ==========
+uci add firewall redirect
+uci set firewall.@redirect[-1].name='pve_22022'
+uci set firewall.@redirect[-1].target='DNAT'
+uci set firewall.@redirect[-1].src='wan'
+uci set firewall.@redirect[-1].dest='lan'
+uci set firewall.@redirect[-1].proto='tcp udp'
+uci set firewall.@redirect[-1].src_dport='22022'
+uci set firewall.@redirect[-1].dest_ip='10.10.10.56'
+uci set firewall.@redirect[-1].dest_port='22'
+uci set firewall.@redirect[-1].enabled='1'
+
+# ========== id=18 enabled=no 多端口，全部禁用【注释】 ==========
+# uci add firewall redirect
+# uci set firewall.@redirect[-1].name='id18_33306'
+# uci set firewall.@redirect[-1].target='DNAT'
+# uci set firewall.@redirect[-1].src='wan'
+# uci set firewall.@redirect[-1].dest='lan'
+# uci set firewall.@redirect[-1].proto='tcp'
+# uci set firewall.@redirect[-1].src_dport='33306'
+# uci set firewall.@redirect[-1].dest_ip='10.10.10.56'
+# uci set firewall.@redirect[-1].dest_port='3306'
+# uci set firewall.@redirect[-1].enabled='0'
+#
+# uci add firewall redirect
+# uci set firewall.@redirect[-1].name='id18_36379'
+# uci set firewall.@redirect[-1].target='DNAT'
+# uci set firewall.@redirect[-1].src='wan'
+# uci set firewall.@redirect[-1].dest='lan'
+# uci set firewall.@redirect[-1].proto='tcp'
+# uci set firewall.@redirect[-1].src_dport='36379'
+# uci set firewall.@redirect[-1].dest_ip='10.10.10.56'
+# uci set firewall.@redirect[-1].dest_port='6379'
+# uci set firewall.@redirect[-1].enabled='0'
+#
+# uci add firewall redirect
+# uci set firewall.@redirect[-1].name='id18_39000'
+# uci set firewall.@redirect[-1].target='DNAT'
+# uci set firewall.@redirect[-1].src='wan'
+# uci set firewall.@redirect[-1].dest='lan'
+# uci set firewall.@redirect[-1].proto='tcp'
+# uci set firewall.@redirect[-1].src_dport='39000'
+# uci set firewall.@redirect[-1].dest_ip='10.10.10.56'
+# uci set firewall.@redirect[-1].dest_port='9000'
+# uci set firewall.@redirect[-1].enabled='0'
+#
+# uci add firewall redirect
+# uci set firewall.@redirect[-1].name='id18_39001'
+# uci set firewall.@redirect[-1].target='DNAT'
+# uci set firewall.@redirect[-1].src='wan'
+# uci set firewall.@redirect[-1].dest='lan'
+# uci set firewall.@redirect[-1].proto='tcp'
+# uci set firewall.@redirect[-1].src_dport='39001'
+# uci set firewall.@redirect[-1].dest_ip='10.10.10.56'
+# uci set firewall.@redirect[-1].dest_port='9001'
+# uci set firewall.@redirect[-1].enabled='0'
+
+# ========== id=19 enabled=no 80→80 tcp 【禁用】 ==========
+# uci add firewall redirect
+# uci set firewall.@redirect[-1].name='id19_80'
+# uci set firewall.@redirect[-1].target='DNAT'
+# uci set firewall.@redirect[-1].src='wan'
+# uci set firewall.@redirect[-1].dest='lan'
+# uci set firewall.@redirect[-1].proto='tcp'
+# uci set firewall.@redirect[-1].src_dport='80'
+# uci set firewall.@redirect[-1].dest_ip='10.10.10.56'
+# uci set firewall.@redirect[-1].dest_port='80'
+# uci set firewall.@redirect[-1].enabled='0'
+
+# ========== id=20 enabled=no 6800→6800 tcp 【禁用】 ==========
+# uci add firewall redirect
+# uci set firewall.@redirect[-1].name='id20_6800'
+# uci set firewall.@redirect[-1].target='DNAT'
+# uci set firewall.@redirect[-1].src='wan'
+# uci set firewall.@redirect[-1].dest='lan'
+# uci set firewall.@redirect[-1].proto='tcp'
+# uci set firewall.@redirect[-1].src_dport='6800'
+# uci set firewall.@redirect[-1].dest_ip='10.10.10.56'
+# uci set firewall.@redirect[-1].dest_port='6800'
+# uci set firewall.@redirect[-1].enabled='0'
+
+# ========== id=21 enabled=no 6880→6880 tcp 【禁用】 ==========
+# uci add firewall redirect
+# uci set firewall.@redirect[-1].name='id21_6880'
+# uci set firewall.@redirect[-1].target='DNAT'
+# uci set firewall.@redirect[-1].src='wan'
+# uci set firewall.@redirect[-1].dest='lan'
+# uci set firewall.@redirect[-1].proto='tcp'
+# uci set firewall.@redirect[-1].src_dport='6880'
+# uci set firewall.@redirect[-1].dest_ip='10.10.10.56'
+# uci set firewall.@redirect[-1].dest_port='6880'
+# uci set firewall.@redirect[-1].enabled='0'
+
+# ========== id=22 enabled=yes 33389→3389 tcp+udp ==========
+uci add firewall redirect
+uci set firewall.@redirect[-1].name='办公本33389'
+uci set firewall.@redirect[-1].target='DNAT'
+uci set firewall.@redirect[-1].src='wan'
+uci set firewall.@redirect[-1].dest='lan'
+uci set firewall.@redirect[-1].proto='tcp udp'
+uci set firewall.@redirect[-1].src_dport='33389'
+uci set firewall.@redirect[-1].dest_ip='10.10.10.100'
+uci set firewall.@redirect[-1].dest_port='3389'
+uci set firewall.@redirect[-1].enabled='1'
+
+# ========== id=23 enabled=yes 50000→50000 tcp+udp 路由器本机 ==========
+uci add firewall redirect
+uci set firewall.@redirect[-1].name='router_50000'
+uci set firewall.@redirect[-1].target='DNAT'
+uci set firewall.@redirect[-1].src='wan'
+uci set firewall.@redirect[-1].dest='lan'
+uci set firewall.@redirect[-1].proto='tcp udp'
+uci set firewall.@redirect[-1].src_dport='50000'
+uci set firewall.@redirect[-1].dest_ip='10.10.10.1'
+uci set firewall.@redirect[-1].dest_port='50000'
+uci set firewall.@redirect[-1].enabled='1'
+
+# ========== id=24 enabled=yes 22023→22 tcp+udp 办公本ssh ==========
+uci add firewall redirect
+uci set firewall.@redirect[-1].name='办公本22023'
+uci set firewall.@redirect[-1].target='DNAT'
+uci set firewall.@redirect[-1].src='wan'
+uci set firewall.@redirect[-1].dest='lan'
+uci set firewall.@redirect[-1].proto='tcp udp'
+uci set firewall.@redirect[-1].src_dport='22023'
+uci set firewall.@redirect[-1].dest_ip='10.10.10.100'
+uci set firewall.@redirect[-1].dest_port='22'
+uci set firewall.@redirect[-1].enabled='1'
+
+# ========== id=25 enabled=yes 33390→3389 tcp+udp 10.10.10.3 ==========
+uci add firewall redirect
+uci set firewall.@redirect[-1].name='pc3_33390'
+uci set firewall.@redirect[-1].target='DNAT'
+uci set firewall.@redirect[-1].src='wan'
+uci set firewall.@redirect[-1].dest='lan'
+uci set firewall.@redirect[-1].proto='tcp udp'
+uci set firewall.@redirect[-1].src_dport='33390'
+uci set firewall.@redirect[-1].dest_ip='10.10.10.3'
+uci set firewall.@redirect[-1].dest_port='3389'
+uci set firewall.@redirect[-1].enabled='1'
+
+# ========== id=26 enabled=yes onekvm 38080→8080 tcp 10.10.10.115 ==========
+uci add firewall redirect
+uci set firewall.@redirect[-1].name='onekvm_38080'
+uci set firewall.@redirect[-1].target='DNAT'
+uci set firewall.@redirect[-1].src='wan'
+uci set firewall.@redirect[-1].dest='lan'
+uci set firewall.@redirect[-1].proto='tcp'
+uci set firewall.@redirect[-1].src_dport='38080'
+uci set firewall.@redirect[-1].dest_ip='10.10.10.115'
+uci set firewall.@redirect[-1].dest_port='8080'
+uci set firewall.@redirect[-1].enabled='1'
+
+# =====提交&重载防火墙=====
+uci commit firewall
+/etc/init.d/firewall reload
+
+#---------以下非执行命令
