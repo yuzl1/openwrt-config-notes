@@ -323,3 +323,10 @@ uci commit firewall
 /etc/init.d/firewall reload
 
 #---------以下非执行命令
+
+id=1 enabled=yes mode=1 location=0 mac=22:34:4d:09:7c:58 duid= server=dnspod.cn domain=ipv6.yu1998.com top_domain=yu1998.com username=<DNSPOD-ID> passwd=<DNSPOD-TOKEN> cf_token=0 account= type=AAAA line= interface=wan2
+id=3 enabled=yes mode=0 location=0 mac= duid= server=dnspod.cn domain=ipv4.yu1998.com top_domain=yu1998.com username=<DNSPOD-ID> passwd=<DNSPOD-TOKEN> cf_token=0 account= type=A line= interface=wan1
+id=4 enabled=no mode=0 location=0 mac= duid= server=aliyun.com domain=mi.yu1998.com top_domain=yu1998.com username=<ALIYUN-ACCESSKEY-ID> passwd=<ALIYUN-ACCESSKEY-SECRET> cf_token=0 account= type=A line= interface=auto
+id=6 enabled=yes mode=0 location=0 mac= duid= server=dnspod.cn domain=*.ipv4.yu1998.com top_domain=yu1998.com username=<DNSPOD-ID> passwd=<DNSPOD-TOKEN> cf_token=0 account= type=A line= interface=wan1
+id=7 enabled=no mode=0 location=0 mac= duid= server=aliyun.com domain=home.yu1998.com top_domain=yu1998.com username=<ALIYUN-ACCESSKEY-ID> passwd=<ALIYUN-ACCESSKEY-SECRET> cf_token=0 account= type=AAAA line= interface=wan2
+id=8 enabled=yes mode=0 location=0 mac= duid= server=dnspod.cn domain=docker-registry.yu1998.com top_domain=yu1998.com username=<DNSPOD-ID> passwd=<DNSPOD-TOKEN> cf_token=0 account= type=A line= interface=wan1
